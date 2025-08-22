@@ -23,7 +23,7 @@ export const fetchNotes = async (
   searchNoteName: string,
   page: number,
   perPage: number
-) => {
+): Promise<NotesResponse> => {
   const res = await axios.get<NotesResponse>('/notes', {
     params: {
       search: searchNoteName,
@@ -34,12 +34,12 @@ export const fetchNotes = async (
   return res.data;
 };
 
-export const deleteNote = async (noteId: string) => {
-  const res = await axios.delete(`/notes/${noteId}`);
+export const deleteNote = async (noteId: string): Promise<Note> => {
+  const res = await axios.delete<Note>(`/notes/${noteId}`);
   return res.data;
 };
 
-export const createNote = async (newNoteParams: NewNote) => {
-  const res = await axios.post<NotesResponse>('/notes', newNoteParams);
+export const createNote = async (newNoteParams: NewNote): Promise<Note> => {
+  const res = await axios.post<Note>('/notes', newNoteParams);
   return res.data;
 };

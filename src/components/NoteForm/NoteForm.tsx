@@ -24,12 +24,13 @@ const NoteSchema = Yup.object().shape({
 });
 
 export default function NoteForm({ onCancel, onSubmit }: NoteFormProps) {
-  const queryCLient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { mutate: createMutation } = useMutation({
     mutationFn: createNote,
     onSuccess() {
-      queryCLient.invalidateQueries({ queryKey: ['notes'] });
+      queryClient.invalidateQueries({ queryKey: ['notes'] });
+      onSubmit();
     },
   });
 
@@ -39,7 +40,6 @@ export default function NoteForm({ onCancel, onSubmit }: NoteFormProps) {
   ) => {
     createMutation(values);
     actions.resetForm();
-    onSubmit();
   };
 
   return (

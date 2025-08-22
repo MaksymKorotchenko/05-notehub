@@ -13,7 +13,10 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 export default function App() {
   const [searchNote, setSearchNote] = useState('');
-  const debouncedSearchNote = useDebouncedCallback(setSearchNote, 1000);
+  const debouncedSearchNote = useDebouncedCallback((value: string) => {
+    setSearchNote(value);
+    setPage(1);
+  }, 1000);
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
